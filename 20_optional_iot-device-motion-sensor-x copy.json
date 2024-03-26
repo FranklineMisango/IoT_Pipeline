@@ -1,0 +1,1 @@
+{"name":"iot-device-motion-sensor-x","topic":"/iot-o2-arena-motion","payload":[{"name":"ts","type":"timestamp","tsformat":"default"},{"name":"geo_coordinates","type":"location","radius":190,"lat":51.50295,"long":0.003163},{"name":"device_status","arr":["online"],"static":false,"type":"pickOne"},{"name":"motion_detected","arr":["1","1","1","0"],"static":false,"type":"pickOne"}]}

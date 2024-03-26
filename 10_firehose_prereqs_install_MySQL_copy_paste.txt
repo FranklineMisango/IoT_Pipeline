@@ -1,0 +1,56 @@
+  Go to Systems mgr
+    Enable it in Quick Setup, if you haven't done it yet
+    Go to Session Manager
+    Open a session in the new server
+
+        # install MySQL
+        sudo yum update -y
+        sudo yum install -y mariadb-server
+
+        # start the engine
+        sudo systemctl start mariadb
+
+        # enable auto-start with system
+        sudo systemctl enable mariadb
+
+        # Connect
+        mysql -uroot -p;
+
+        << No password needed at this time - Just enter >>
+
+    Create APP User
+
+        CREATE USER 'usr_iot_admin'@'%' IDENTIFIED BY 'dew4DL';
+        CREATE USER 'usr_iot_admin'@'localhost' IDENTIFIED BY 'dew4DL';
+
+        GRANT ALL ON *.* TO 'usr_iot_admin'@'localhost';
+        GRANT ALL ON *.* TO 'usr_iot_admin'@'%';
+        FLUSH PRIVILEGES;
+
+    Create iot table
+        ----
+
+        show databases;
+        create database db_iot_smart_buildings;
+
+        use db_iot_smart_buildings;
+
+        -- db_iot_smart_buildings.tbl_smart_temperature_model_x definition
+
+        CREATE TABLE `tbl_smart_temperature_model_x` (
+          `device_id` varchar(10) NOT NULL,
+          `measurement_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `measure_name` varchar(20) DEFAULT NULL,
+          `measure_value` float DEFAULT NULL,
+          `device_status` varchar(20) NOT NULL
+        );
+
+        -- This DDL command was incorrect, using the wrong Data Type Precision for the geo-coordinates. It's now fixed:
+        CREATE TABLE `tbl_smart_motion_model_x` (
+          `device_id` varchar(10) NOT NULL,
+          `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `latitude` DECIMAL(17,14) DEFAULT NULL,
+          `longitude` DECIMAL(17,14) DEFAULT NULL,
+          `motion_detected` tinyint(1),
+          `device_status` varchar(20) NOT NULL
+        );
